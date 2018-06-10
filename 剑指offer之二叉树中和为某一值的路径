@@ -1,0 +1,34 @@
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};*/
+class Solution {
+public:
+    /*
+        深度优先遍历节点信息
+    */
+    void DFSFind(TreeNode* root,int expectNumber, vector<vector<int> > &findPath, vector<int> &trace){
+        trace.push_back(root->val);
+        if(expectNumber == root->val && root->left == NULL && root->right == NULL){
+            findPath.push_back(trace);
+        }
+        if(root->left != NULL){
+            DFSFind(root->left, expectNumber-root->val, findPath, trace);
+        }
+        if(root->right != NULL){
+            DFSFind(root->right, expectNumber-root->val, findPath, trace);
+        }
+        trace.pop_back();
+    }
+    vector<vector<int> > FindPath(TreeNode* root,int expectNumber) {
+        vector<vector<int> > findPath;
+        vector<int> trace;
+        if(root != NULL) DFSFind(root, expectNumber, findPath, trace);
+        return findPath;
+    }
+};
